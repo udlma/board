@@ -28,12 +28,22 @@
 
 	<beans:bean id="loginCheck"
 		class="org.zerock.interceptor.LoginCheckInterceptor"></beans:bean>
+	<beans:bean id="postCheck"
+		class="org.zerock.interceptor.PostLoginInterceptor"></beans:bean>
+		
 
 
 	<interceptors>
 		<interceptor>
 			<mapping path="/board/register" />
+			<mapping path="/board/view"/>
+			<mapping path="/board/update"/>
+			<mapping path="/board/delete"/>
 			<beans:ref bean="loginCheck" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/login/action" />
+			<beans:ref bean="postCheck" />
 		</interceptor>
 	</interceptors>
 

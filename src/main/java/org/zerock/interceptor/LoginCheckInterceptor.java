@@ -4,9 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpRequest;
+
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	
 	public void saveDest(HttpServletRequest req) {
@@ -25,6 +28,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		if(req.getMethod().equals("GET")) {
+			log.info("dest :"+ uri+query);
 			req.getSession().setAttribute("dest", uri+query);
 		}
 		
@@ -44,7 +48,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 			result = true;
 			
 		}else {
-			
+			saveDest(request);
 			response.sendRedirect("/login/login");
 		}
 		
