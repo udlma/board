@@ -3,10 +3,10 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.zerock.mapper.MmeberMapper">
+<mapper namespace="org.zerock.mapper.MemberMapper">
 
 <select id="read" resultType="org.zerock.domain.MemberVO">
-select * from tbl_member_secu where uid = #{uid}, upw = #{upw}
+select * from tbl_member_secu where uid = #{uid} and upw = #{upw}
 </select>
 	
 </mapper>
