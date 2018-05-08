@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.BoardMapper">
+
+	<select id="list" resultType="org.zerock.domain.BoardVO">
+
+		select * from tbl_board order by
+		bno desc limit #{skip}, 10
+
+	</select>
+
+	<insert id="insert">
+
+		insert into tbl_board(title, content, writer)
+		values(#{title}, #{content}, #{writer})
+
+	</insert>
+
+	<delete id="delete">
+
+		delete from tbl_board
+		where bno = #{bno}
+
+	</delete>
+
+	<update id="update">
+
+		update tbl_board
+		set title = #{title}, content = #{content}, updatedate = now()
+		where bno = #{bno}
+
+	</update>
+
+	<select id="read" resultType="org.zerock.domain.BoardVO">
+
+		select * from tbl_board
+		where bno = #{bno}
+
+	</select>
+
+
+	<select id="searchList" resultType="org.zerock.domain.BoardVO">
+
+		select * from tbl_board
+		
+		<include refid="search"></include>
+
+
+	</select>
+
+	<select id="total" resultType="int">
+
+		select count(bno) from tbl_board
+
+	</select>
+	
+	<select id="searchTotal" resultType="int">
+		
+		select count(bno) from tbl_board
+		
+		<include refid="search"></include>
+		
+	
+	</select>
+
+
+	<sql id="search">
+
+		<if test="arr != null">
+			<where>
+				<foreach collection="arr" item="item" open="(" close=")"
+					separator=" or ">
+
+					<if test="item eq 't'.toString()">
+						title like concat('%', #{keyword}, '%')
+					</if>
+					<if test="item eq 'c'.toString()">
+						content like concat('%', #{keyword}, '%')
+					</if>
+					<if test="item eq 'w'.toString()">
+						writer like concat('%', #{keyword}, '%')
+					</if>
+
+				</foreach>
+
+
+			</where>
+
+			order by bno desc limit #{skip}, 10
+
+		</if>
+
+	</sql>
+</mapper>
+
+
+
+
+
+
