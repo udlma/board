@@ -37,7 +37,5 @@ public class PageMaker {
 		}
 		this.end = tempLast;
 		this.cri = cri;
-		
-		
 	}
 }

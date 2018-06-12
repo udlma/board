@@ -5,6 +5,6 @@ import org.zerock.domain.MemberVO;
 
 public interface MemberMapper {
 	
-	public MemberVO read(@Param("uid") String uid, @Param("upw") String upw);
 
+	public MemberVO read(String uid);
 }

@@ -1,4 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <div id="page-wrapper">
 	<div class="row">
@@ -40,17 +42,19 @@
 								<a
 									href="/board/list?page=${param.page }&type=${param.type }&keyword=${param.keyword }"><button>Back</button></a>
 							</c:if>
-							<c:if test="${param.type == null }">
+							<c:if test="${param.type == null and vo.writer eq userName}">
 								<a href="/board/update?page=${param.page }&bno=${param.bno}"><button>Update</button></a>
 							</c:if>
-							<c:if test="${param.type != null }">
+							<c:if test="${param.type != null and vo.writer eq userName}">
 								<a
 									href="/board/update?page=${param.page }&bno=${param.bno}&type=${param.type }&keyword=${param.keyword }"><button>Update</button></a>
 							</c:if>
+							<c:if test="${vo.writer eq userName}">
 							<a href="/board/delete?page=${param.page }&bno=${param.bno}"><button>Delete</button></a>
+							</c:if>						
 						</div>
 						<div>
-							replyer<input type="text" name="replyer" id="replyer">
+							replyer<input type="text" name="replyer" id="replyer" readonly="readonly" value="${userName }">
 							replytext<input type="text" name="replytext" id="reply">
 							<button id="replyBtn" data-type="reply">+</button>
 						</div>
@@ -95,7 +99,9 @@ var reply = $("#reply");
 var replyer = $("#replyer");
 var rno = null;
 var replyBtnData = null;
-var pagination = $(".pagination")
+var pagination = $(".pagination");
+var csrftoken = "${_csrf.token}";
+
 
 
 $(document).ready(function () {
@@ -104,11 +110,15 @@ $(document).ready(function () {
 	
 });
 
+
 replyBtn.on("click", function (e) {
 	replyBtnData = replyBtn.attr("data-type");
 	
+	setCSRF(csrftoken);
+	
 	if(replyBtnData === 'reply'){
 		$.ajax({
+			
 			url : "/reply/new",
 			type : "post",
 			dataType : "text",
@@ -118,7 +128,7 @@ replyBtn.on("click", function (e) {
 				replytext : reply.val()
 			}),
 			headers : {
-				"Content-Type" : "application/json"
+				"Content-Type" : "application/json",
 			},
 			success : function (result) {
 				if(result == "success"){
@@ -127,6 +137,7 @@ replyBtn.on("click", function (e) {
 				}
 			}
 		});
+		
 	}else if(replyBtnData === 'update'){
 		$.ajax({
 			url : "/reply/"+$(e.target).attr("data-rno"),
@@ -205,8 +216,11 @@ function getAllList(page) {
 		
 		$(data.list).each(function (e) {
 			
-			str += "<li data-rno='"+this.rno+"'>"+this.replyer+":"+this.replytext+"<button>x</button><button>u</button></li>";
+			str += "<li data-rno='"+this.rno+"'>"+this.replyer+":"+this.replytext;
 			
+			if(this.replyer == "${userName}"){
+				str	+="<button>x</button><button>u</button></li>";
+			}
 		});
 		
 		replyList.html(str);
@@ -234,6 +248,13 @@ function paging(pm) {
 	
 	
 }
+
+function setCSRF(tokenValue){
+
+	$.ajaxSetup({
+			headers: { 'X-CSRF-TOKEN' : tokenValue}
+		   });
+	}
 
 
 </script>

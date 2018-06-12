@@ -1,4 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <div id="page-wrapper">
 	<div class="row">
@@ -22,7 +24,7 @@
 								</div>
 								<div class="form-group">
 									<label>Writer</label> <input
-										class="form-control" name="writer">
+										class="form-control" name="writer" readonly="readonly" value="${userName}">
 								</div>
 								
 							
@@ -30,8 +32,9 @@
 									<label>Content area</label>
 									<textarea class="form-control" rows="3" name="content"></textarea>
 								</div>
-							
+								<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 								<input type="submit" value="create" >
+								
 							</form>
 							<a href="/board/list?page=${param.page }"><button>Back</button></a>
 							

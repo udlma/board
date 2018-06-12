@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,7 +45,7 @@
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="/login/action" method="post">
+                        <form action="/login" method="post">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control"  name="username" autofocus>
@@ -52,6 +53,12 @@
                                 <div class="form-group">
                                     <input class="form-control" name="password" type="password">
                                 </div>
+                                
+                                <div class="form-group">
+                                    <input type="checkbox" name="remember-me"> Remember-me
+                                </div>
+                                
+                                <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
                                
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button>Login</button>

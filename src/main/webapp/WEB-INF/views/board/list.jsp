@@ -1,11 +1,17 @@
 
 
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Tables</h1>
+		</div>
+		<div>
+		<%-- <h2><sec:authentication property="principal.username"/>님 안녕하세요.</h2> --%>
+		
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
@@ -16,6 +22,10 @@
 				<div class="panel-heading">
 					<a href="/board/register?page=${pm.page }"><button>register</button></a>
 				</div>
+				<form action="/login/logout" method="post">
+				<button>Logout</button>
+				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+				</form>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<table width="100%"

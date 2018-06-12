@@ -1,5 +1,6 @@
 package org.zerock.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,9 +52,10 @@ public class BoardController {
 	}
 
 	@GetMapping("/register")
-	public void register() {
+	public void register(Principal principal, Model model) {
 
 		log.info("register get");
+		model.addAttribute("userName", principal.getName());
 
 	}
 
@@ -62,9 +64,8 @@ public class BoardController {
 
 		log.info("register post");
 		service.create(vo);
-
 		reattr.addFlashAttribute("value", "rsuccess");
-
+		
 		return "redirect:/board/list";
 
 	}
@@ -110,14 +111,16 @@ public class BoardController {
 	}
 
 	@GetMapping("/view")
-	public void view(Integer bno, Model model) {
+	public void view(Integer bno, Model model, Principal principal) {
 
 		log.info("view get");
 
 		BoardVO vo = service.getView(bno);
+		
+		String userName = principal.getName();
 
 		model.addAttribute("vo", vo);
-
+		model.addAttribute("userName", userName);
 	}
 
 

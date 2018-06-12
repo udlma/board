@@ -32,7 +32,7 @@
 		class="org.zerock.interceptor.PostLoginInterceptor"></beans:bean>
 		
 
-
+<!-- 
 	<interceptors>
 		<interceptor>
 			<mapping path="/board/register" />
@@ -45,7 +45,7 @@
 			<mapping path="/login/action" />
 			<beans:ref bean="postCheck" />
 		</interceptor>
-	</interceptors>
+	</interceptors> -->
 
 
 </beans:beans>

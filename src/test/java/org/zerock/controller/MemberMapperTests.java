@@ -19,7 +19,7 @@ public class MemberMapperTests {
 	@Test
 	public void testLogin() {
 		
-		mapper.read("user00", "user00");
+		mapper.read("userr02");
 		
 	}
 
