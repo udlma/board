@@ -15,7 +15,7 @@ public class LoginController {
 	@GetMapping("/login")
 	public void login() {
 		
-		log.info("get logindsf");
+		log.info("get login");
 		
 	}
 
