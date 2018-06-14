@@ -22,6 +22,7 @@
 				<div class="panel-heading">
 					<a href="/board/register?page=${pm.page }"><button>register</button></a>
 				</div>
+				<a href="/login/login"><button>Login</button></a>
 				<form action="/logout" method="post">
 				<button>Logout</button>
 				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
@@ -37,6 +38,7 @@
 								<th>Title</th>
 								<th>Writer</th>
 								<th>Regdate</th>
+								<th>Hit</th>
 							</tr>
 						</thead>
 
@@ -53,6 +55,7 @@
 									</c:if>
 									<td>${item.writer }</td>
 									<td>${item.regdate }</td>
+									<td>${item.hit }</td>
 								</tr>
 							</c:forEach>
 

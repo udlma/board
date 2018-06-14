@@ -16,5 +16,5 @@ public interface BoardMapper {
 	public List<BoardVO> searchList(Critaria cri);
 	public int total();
 	public int searchTotal(Critaria cri);
-
+	public void viewHit(int bno);
 }

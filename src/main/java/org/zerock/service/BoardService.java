@@ -16,5 +16,6 @@ public interface BoardService {
 	public List<BoardVO> getSearchList(Critaria cri);
 	public int getTotal();
 	public int getSearchTotal(Critaria cri);
+	public void viewHit(Integer bno);
 
 }

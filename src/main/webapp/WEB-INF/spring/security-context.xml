@@ -5,15 +5,10 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<security:http auto-config="true" use-expressions="false">
-
 		<!-- <security:intercept-url pattern="/board/list"
 			access="ROLE_ADMIN" /> -->
 		<security:form-login login-page="/login/login"  default-target-url="/board/list" />
-		<security:remember-me key="jr01" token-validity-seconds="3600" data-source-ref="dataSource"/>
 		<security:logout delete-cookies="JSESSIONID" logout-success-url="/login/login" invalidate-session="true"/>
-		
-		
-
 	</security:http>
 	
 	
@@ -23,9 +18,7 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	<bean id="sampleEncoder"
-		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
-		
+	<bean id="sampleEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>	
 	<bean id="customUserService" class="org.zerock.security.CustomUserLoginSecurity"></bean>
 
 </beans>

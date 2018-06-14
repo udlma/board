@@ -134,6 +134,7 @@ replyBtn.on("click", function (e) {
 				if(result == "success"){
 					alert("reply success");
 					getAllList(page);
+					reply.val("");
 				}
 			}
 		});
@@ -154,7 +155,6 @@ replyBtn.on("click", function (e) {
 					alert("reply update success");
 					getAllList(page);
 					reply.val("");
-					replyer.val("");
 					replyBtn.html("+");
 					replyBtn.attr("data-type", "reply");
 				}

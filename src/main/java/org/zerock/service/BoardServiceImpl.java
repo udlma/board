@@ -65,6 +65,13 @@ public class BoardServiceImpl implements BoardService {
 		
 		return mapper.searchTotal(cri);
 	}
+
+	@Override
+	public void viewHit(Integer bno) {
+		
+		mapper.viewHit(bno);
+		
+	}
 	
 	
 	

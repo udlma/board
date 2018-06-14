@@ -2,7 +2,13 @@ package org.zerock.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +25,8 @@ import org.zerock.domain.Critaria;
 import org.zerock.domain.PageMaker;
 import org.zerock.service.BoardService;
 
+import com.mysql.jdbc.StringUtils;
+
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -27,13 +35,15 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Controller
 @RequestMapping("/board/*")
+
 public class BoardController {
 
 	@Setter(onMethod_ = { @Autowired })
 	private BoardService service;
-
+	
+	
 	@GetMapping("/list")
-	public void list(Critaria cri, Model model) {
+	public void list(Critaria cri, Model model ) {
 
 		List<BoardVO> list = new ArrayList<>();
 		PageMaker pm = null;
@@ -50,13 +60,16 @@ public class BoardController {
 		model.addAttribute("pm", pm);
 
 	}
-
+	
+	
 	@GetMapping("/register")
 	public void register(Principal principal, Model model) {
 
 		log.info("register get");
-		model.addAttribute("userName", principal.getName());
-
+		
+		if(principal != null) {
+			model.addAttribute("userName", principal.getName());
+		}
 	}
 
 	@PostMapping("/register")
@@ -111,18 +124,41 @@ public class BoardController {
 	}
 
 	@GetMapping("/view")
-	public void view(Integer bno, Model model, Principal principal) {
+	public void view(Integer bno, Model model, HttpServletRequest request,  Principal principal) {
 
 		log.info("view get");
 
 		BoardVO vo = service.getView(bno);
 		
-		String userName = principal.getName();
-
 		model.addAttribute("vo", vo);
-		model.addAttribute("userName", userName);
+		
+		if(principal != null) {
+			model.addAttribute("userName", principal.getName());
+		}
+		
+		Cookie cookies[] = request.getCookies();
+	    Map map = new HashMap();
+	    if(request.getCookies() != null){
+	    	for (int i = 0; i < cookies.length; i++) {
+	    		Cookie obj = cookies[i];
+	    		map.put(obj.getName(),obj.getValue());
+	    	}
+	    }
+
+	    // 저장된 쿠키중에 read_count 만 불러오기
+	    String readCount = (String) map.get("read_count");
+	     // 저장될 새로운 쿠키값 생성
+	    String newReadCount = "|" + bno;
+
+	    // 저장된 쿠키에 새로운 쿠키값이 존재하는 지 검사
+	    if ( StringUtils.indexOfIgnoreCase(readCount, newReadCount) == -1 ) {
+	          // 없을 경우 쿠키 생성
+	          Cookie cookie = new Cookie("read_count", readCount + newReadCount);
+	         
+	          
+	          service.viewHit(bno); // 업데이트 실행
+	    } 
+		
+		
 	}
-
-
-
 }
