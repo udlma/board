@@ -22,7 +22,7 @@
 				<div class="panel-heading">
 					<a href="/board/register?page=${pm.page }"><button>register</button></a>
 				</div>
-				<form action="/login/logout" method="post">
+				<form action="/logout" method="post">
 				<button>Logout</button>
 				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 				</form>
